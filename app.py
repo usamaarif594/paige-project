@@ -3,7 +3,7 @@ import os
 from openai import OpenAI
 
 # # Streamlit Page Configuration
-# st.title("Girl Talk", page_icon="💬", layout="centered")
+st.title("Girl Talk", page_icon="💬", layout="centered")
 # Initialize OpenAI client
 # api_key =st.text_input('Paste your api key here',type='password')
 
