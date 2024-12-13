@@ -3,7 +3,7 @@ import os
 from openai import OpenAI
 
 # # Streamlit Page Configuration
-
+st.set_page_config(page_title="Girl Talk", page_icon="💬", layout="centered")
 # App Title
 st.title("Girl Talk 💬")
 # Initialize OpenAI client
