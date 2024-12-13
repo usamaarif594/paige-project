@@ -3,9 +3,7 @@ import os
 from openai import OpenAI
 
 # Initialize OpenAI client
-client = OpenAI(
-    api_key='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'
-)
+client = 
 
 # Character personalities and prompts
 characters = {
