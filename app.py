@@ -3,8 +3,10 @@ import os
 from openai import OpenAI
 
 # Initialize OpenAI client
-client =st.secrets["openai_api_key"]
+api_key = st.secrets["openai_api_key"]
 
+# Set up the OpenAI API client
+client = OpenAI(api_key=api_key)
 # Character personalities and prompts
 characters = {
     "Talk to Mila (The Wise Mentor)": {
