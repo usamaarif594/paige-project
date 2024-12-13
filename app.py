@@ -3,7 +3,7 @@ import os
 from openai import OpenAI
 
 # Initialize OpenAI client
-client = 
+client =st.secrets["openai_api_key"]
 
 # Character personalities and prompts
 characters = {
