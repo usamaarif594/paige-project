@@ -1,25 +1,27 @@
 import streamlit as st
-import openai  
-# Initialize OpenAI client with the API key from Streamlit secrets
-openai.api_key = st.secrets["openai_api_key"]
+import os
+from openai import OpenAI
+
+# Initialize OpenAI client
+client =st.secrets["openai_api_key"]
 
 # Character personalities and prompts
 characters = {
     "Talk to Mila (The Wise Mentor)": {
         "description": "Mila: Calm and Reflective",
-        "prompt": "You are Mila, a wise and empathetic mentor. Respond to the user’s challenge with calm, reflective advice. Your response should be concise, not too long, not too short, and show feelings like human beings."
+        "prompt": "You are Mila, a wise and empathetic mentor. Respond to the user’s challenge with calm, reflective advice.Your response should be concise not too long not too short and show feelings lik human beings"
     },
     "Talk to Zara (The Sassy Hype Girl)": {
         "description": "Zara: Bold and Confident",
-        "prompt": "You are Zara, a bold and confident hype girl. Respond with sassy and motivational advice. Your response should be concise, not too long, not too short, and show feelings like human beings."
+        "prompt": "You are Zara, a bold and confident hype girl. Respond with sassy and motivational advice.Your response should be concise not too long not too short and show feelings lik human beings"
     },
     "Talk to Gia (The Nurturing Bestie)": {
         "description": "Gia: Warm and Caring",
-        "prompt": "You are Gia, a nurturing and supportive best friend. Respond with caring and uplifting advice. Your response should be concise, not too long, not too short, and show feelings like human beings."
+        "prompt": "You are Gia, a nurturing and supportive best friend. Respond with caring and uplifting advice.Your response should be concise not too long not too short and show feelings lik human beings"
     },
     "Talk to Blake (The Adventurous Rebel)": {
         "description": "Blake: Bold and Free-Spirited",
-        "prompt": "You are Blake, an adventurous and daring rebel. Respond with bold and adventurous advice. Your response should be concise, not too long, not too short, and show feelings like human beings."
+        "prompt": "You are Blake, an adventurous and daring rebel. Respond with bold and adventurous advice.Your response should be concise not too long not too short and show feelings lik human beings"
     }
 }
 
@@ -54,15 +56,15 @@ if user_input := st.chat_input("Type your challenge or problem here..."):
     
     # Call GPT API with character-specific prompt
     try:
-        chat_completion = openai.ChatCompletion.create(
+        chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": selected_prompt},
                 {"role": "user", "content": user_input},
             ],
-            model="gpt-4"
+            model="gpt-4o"
         )
         # Correctly access the generated response
-        ai_message = chat_completion.choices[0].message["content"]
+        ai_message = chat_completion.choices[0].message.content
     except Exception as e:
         ai_message = f"Error generating response: {e}"
 
