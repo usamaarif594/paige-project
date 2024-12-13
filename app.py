@@ -5,7 +5,11 @@ from openai import OpenAI
 # # Streamlit Page Configuration
 # st.title("Girl Talk", page_icon="💬", layout="centered")
 # Initialize OpenAI client
-api_key =st.text_input('Paste your api key here',type='password')
+# api_key =st.text_input('Paste your api key here',type='password')
+
+
+# Access the API key
+api_key = os.getenv("OPENAI_API_KEY")
 
 # Set up the OpenAI API client
 client = OpenAI(api_key=api_key)
