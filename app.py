@@ -2,13 +2,6 @@ import streamlit as st
 import os
 from openai import OpenAI
 
-# # Streamlit Page Configuration
-st.set_page_config(page_title="Girl Talk", page_icon="💬", layout="centered")
-# App Title
-st.title("Girl Talk 💬")
-# Initialize OpenAI client
-# api_key =st.text_input('Paste your api key here',type='password')
-
 
 # Access the API key
 api_key = os.getenv("OPENAI_API_KEY")
@@ -37,49 +30,54 @@ characters = {
 
 
 
-
-
-# Chat session state initialization
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-# Dropdown for character selection
-character_choice = st.selectbox(
-    "Babe Squad:",
-    options=list(characters.keys()),
-    format_func=lambda x: characters[x]["description"]
-)
-
-# Chat container
-with st.chat_message("system"):
-    st.markdown(f"You are chatting with **{character_choice}**. Feel free to share what's on your mind!")
-
-# User input for the chat
-if user_input := st.chat_input("Type your challenge or problem here..."):
-    # Save user's message
-    st.session_state.messages.append({"role": "user", "content": user_input})
+def main():
+    # Streamlit Page Configuration
+    st.set_page_config(page_title="Girl Talk", page_icon="💬", layout="centered")
+    # App Title
+    st.title("Girl Talk 💬")
+    # Chat session state initialization
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
     
-    # Get the selected character's prompt
-    selected_prompt = characters[character_choice]["prompt"]
+    # Dropdown for character selection
+    character_choice = st.selectbox(
+        "Babe Squad:",
+        options=list(characters.keys()),
+        format_func=lambda x: characters[x]["description"]
+    )
     
-    # Call GPT API with character-specific prompt
-    try:
-        chat_completion = client.chat.completions.create(
-            messages=[
-                {"role": "system", "content": selected_prompt},
-                {"role": "user", "content": user_input},
-            ],
-            model="gpt-4o"
-        )
-        # Correctly access the generated response
-        ai_message = chat_completion.choices[0].message.content
-    except Exception as e:
-        ai_message = f"Error generating response: {e}"
-
-    # Save AI's message
-    st.session_state.messages.append({"role": "assistant", "content": ai_message})
-
-# Display chat messages
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    # Chat container
+    with st.chat_message("system"):
+        st.markdown(f"You are chatting with **{character_choice}**. Feel free to share what's on your mind!")
+    
+    # User input for the chat
+    if user_input := st.chat_input("Type your challenge or problem here..."):
+        # Save user's message
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        
+        # Get the selected character's prompt
+        selected_prompt = characters[character_choice]["prompt"]
+        
+        # Call GPT API with character-specific prompt
+        try:
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {"role": "system", "content": selected_prompt},
+                    {"role": "user", "content": user_input},
+                ],
+                model="gpt-4o"
+            )
+            # Correctly access the generated response
+            ai_message = chat_completion.choices[0].message.content
+        except Exception as e:
+            ai_message = f"Error generating response: {e}"
+    
+        # Save AI's message
+        st.session_state.messages.append({"role": "assistant", "content": ai_message})
+    
+    # Display chat messages
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+if __name__=='__main__':
+    main()
