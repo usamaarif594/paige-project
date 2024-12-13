@@ -30,8 +30,7 @@ characters = {
 # Streamlit Page Configuration
 st.set_page_config(page_title="Girl Talk", page_icon="💬", layout="centered")
 
-# App Title
-st.title("Girl Talk 💬")
+
 
 # Chat session state initialization
 if "messages" not in st.session_state:
